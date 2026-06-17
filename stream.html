@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oswaldo Stream | Copa del Mundo</title>
 
-    <!-- SCRIPT DE SEGURIDAD VIP -->
     <script>
         const pase = localStorage.getItem('oswaldo_pase_vip');
         const ahora = Date.now();
@@ -37,7 +36,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
             animation: panBackground 20s linear infinite;
         }
 
@@ -85,6 +84,7 @@
             animation: cardEntrance 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             opacity: 0;
             transform: translateY(50px) rotateX(10deg);
+            margin-bottom: 4rem; /* <-- AQUÍ ESTÁ EL ESPACIO EXTRA PARA EL SCROLL */
         }
 
         @keyframes cardEntrance {
@@ -129,7 +129,6 @@
 
         .options-title { font-size: 0.8rem; color: #8fa3b0; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
 
-        /* Ajuste de cuadrícula para que los botones se vean bien */
         .channel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
         .channel-btn {
@@ -177,13 +176,46 @@
         @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
         .terminal-text { font-family: monospace; color: #00ff87; font-size: 0.9rem; margin-top: 20px; letter-spacing: 1px; }
 
-        .time-left { text-align: center; margin-top: 2.5rem; font-size: 0.75rem; color: #64748b; font-family: monospace; letter-spacing: 1px; }
+        /* Estilos del Temporizador y el Texto Original */
+        .status-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2.5rem;
+            gap: 12px;
+        }
+
+        .timer-text {
+            font-size: 0.9rem;
+            color: #8fa3b0;
+            font-family: monospace;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timer-glow {
+            font-size: 1.5rem;
+            color: #00ff87;
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(0, 255, 135, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .time-left {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-family: monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
 
         @media (max-width: 768px) {
             .channel-grid { grid-template-columns: 1fr; }
             .teams-container { flex-direction: column; gap: 0.5rem; }
             .team { font-size: 2rem; }
-            .glass-card { padding: 2rem 1.5rem; }
+            .glass-card { padding: 2rem 1.5rem; margin-bottom: 2rem; }
         }
     </style>
 </head>
@@ -208,14 +240,13 @@
                 <div class="teams-container">
                     <div class="team">PORTUGAL</div>
                     <div class="vs">VS</div>
-                    <div class="team">CONGO DEMOCRATICO</div>
+                    <div class="team">RD CONGO</div>
                 </div>
                 <div class="live-indicator"><div class="live-dot"></div> EN VIVO - SEÑAL MUNDIAL</div>
             </div>
 
             <div class="options-title">Nodos de Transmisión Disponibles</div>
 
-            <!-- CUADRÍCULA DE 5 CANALES -->
             <div class="channel-grid">
                 <a href="telemundo.html" class="channel-btn">
                     <div class="server-name">Servidor 1: Telemundo</div>
@@ -259,12 +290,20 @@
                 </a>
             </div>
 
-            <div class="time-left">ESTADO DEL PASE VIP: ACTIVO Y VERIFICADO</div>
+            <div class="status-container">
+                <div class="timer-text">
+                    Pase VIP caduca en: <span class="timer-glow" id="countdownTimer">--:--:--</span>
+                </div>
+                <div class="time-left">ESTADO DEL PASE VIP: ACTIVO Y VERIFICADO</div>
+            </div>
+
         </div>
     </main>
 
     <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+
     <script>
+
         setTimeout(() => { document.getElementById('term-text').innerText = "Validando Pase VIP..."; }, 800);
         setTimeout(() => { document.getElementById('term-text').innerText = "Desencriptando señal de video..."; }, 1600);
         setTimeout(() => {
@@ -272,6 +311,34 @@
             loader.style.opacity = '0';
             setTimeout(() => loader.style.display = 'none', 500);
         }, 2400);
+
+        function actualizarTemporizador() {
+            const paseGuardado = localStorage.getItem('oswaldo_pase_vip');
+            if (!paseGuardado) return;
+
+            const tiempoTranscurrido = Date.now() - parseInt(paseGuardado);
+            const tiempoRestante = limite - tiempoTranscurrido;
+
+            if (tiempoRestante <= 0) {
+                localStorage.removeItem('oswaldo_pase_vip');
+                window.location.href = 'index.html';
+            } else {
+                let horas = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+                let segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
+
+                horas = (horas < 10) ? "0" + horas : horas;
+                minutos = (minutos < 10) ? "0" + minutos : minutos;
+                segundos = (segundos < 10) ? "0" + segundos : segundos;
+
+                document.getElementById('countdownTimer').innerText = horas + ":" + minutos + ":" + segundos;
+            }
+        }
+
+        setInterval(actualizarTemporizador, 1000);
+
+        actualizarTemporizador();
     </script>
 </body>
 </html>
+
