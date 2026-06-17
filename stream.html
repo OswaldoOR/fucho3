@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oswaldo Stream | Copa del Mundo</title>
 
+    <!-- SCRIPT DE SEGURIDAD VIP -->
     <script>
         const pase = localStorage.getItem('oswaldo_pase_vip');
         const ahora = Date.now();
-        const limite = 2.5 * 60 * 60 * 1000;
+        const limite = 2.5 * 60 * 60 * 1000; // 2.5 horas en milisegundos
 
         if (!pase || (ahora - pase) > limite) {
             localStorage.removeItem('oswaldo_pase_vip');
@@ -36,7 +37,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Permite scroll abajo, bloquea lados */
             animation: panBackground 20s linear infinite;
         }
 
@@ -84,7 +85,7 @@
             animation: cardEntrance 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             opacity: 0;
             transform: translateY(50px) rotateX(10deg);
-            margin-bottom: 4rem; /* <-- AQUÍ ESTÁ EL ESPACIO EXTRA PARA EL SCROLL */
+            margin-bottom: 4rem; /* ESPACIO EXTRA PARA EL SCROLL */
         }
 
         @keyframes cardEntrance {
@@ -247,6 +248,7 @@
 
             <div class="options-title">Nodos de Transmisión Disponibles</div>
 
+            <!-- CUADRÍCULA DE 6 CANALES -->
             <div class="channel-grid">
                 <a href="telemundo.html" class="channel-btn">
                     <div class="server-name">Servidor 1: Telemundo</div>
@@ -288,9 +290,8 @@
                         <span>🔒 256-bit</span>
                     </div>
                 </a>
-            </div>
-
-            <a href="dazn.html" class="channel-btn">
+                <!-- NUEVO: DAZN -->
+                <a href="dazn.html" class="channel-btn">
                     <div class="server-name">Servidor 6: TyCSports</div>
                     <div class="server-stats">
                         <span>📡 PING: 21ms</span>
@@ -313,7 +314,6 @@
     <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
 
     <script>
-
         setTimeout(() => { document.getElementById('term-text').innerText = "Validando Pase VIP..."; }, 800);
         setTimeout(() => { document.getElementById('term-text').innerText = "Desencriptando señal de video..."; }, 1600);
         setTimeout(() => {
@@ -346,9 +346,7 @@
         }
 
         setInterval(actualizarTemporizador, 1000);
-
         actualizarTemporizador();
     </script>
 </body>
 </html>
-
