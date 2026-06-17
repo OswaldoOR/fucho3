@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oswaldo Stream | Copa del Mundo</title>
 
+    <!-- SCRIPT DE SEGURIDAD VIP -->
     <script>
         const pase = localStorage.getItem('oswaldo_pase_vip');
         const ahora = Date.now();
@@ -203,15 +204,16 @@
 
             <div class="match-info">
                 <div class="teams-container">
-                    <div class="team">ARGENTINA</div>
+                    <div class="team">IRAK</div>
                     <div class="vs">VS</div>
-                    <div class="team">ARGELIA</div>
+                    <div class="team">NORUEGA</div>
                 </div>
                 <div class="live-indicator"><div class="live-dot"></div> EN VIVO - SEÑAL MUNDIAL</div>
             </div>
 
             <div class="options-title">Nodos de Transmisión Disponibles</div>
 
+            <!-- CUADRÍCULA DE 4 CANALES -->
             <div class="channel-grid">
                 <a href="telemundo.html" class="channel-btn">
                     <div class="server-name">Servidor 1: Telemundo</div>
@@ -226,6 +228,24 @@
                     <div class="server-stats">
                         <span>📡 PING: 24ms</span>
                         <span>📺 HD 60FPS</span>
+                        <span>🔒 256-bit</span>
+                    </div>
+                </a>
+                <!-- NUEVO: TUDN -->
+                <a href="tudnmx.html" class="channel-btn">
+                    <div class="server-name">Servidor 3: TUDN</div>
+                    <div class="server-stats">
+                        <span>📡 PING: 20ms</span>
+                        <span>📺 HD 60FPS</span>
+                        <span>🔒 256-bit</span>
+                    </div>
+                </a>
+                <!-- NUEVO: ESPN -->
+                <a href="espn.html" class="channel-btn">
+                    <div class="server-name">Servidor 4: ESPN</div>
+                    <div class="server-stats">
+                        <span>📡 PING: 22ms</span>
+                        <span>📺 1080p</span>
                         <span>🔒 256-bit</span>
                     </div>
                 </a>
