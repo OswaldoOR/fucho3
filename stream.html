@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oswaldo Stream | Copa del Mundo</title>
+
+    <script>
+        const pase = localStorage.getItem('oswaldo_pase_vip');
+        const ahora = Date.now();
+        const limite = 2.5 * 60 * 60 * 1000;
+
+        if (!pase || (ahora - pase) > limite) {
+            localStorage.removeItem('oswaldo_pase_vip');
+            window.location.href = 'index.html';
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Montserrat:wght@300;500;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030508;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(227, 194, 99, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(79, 172, 254, 0.08), transparent 25%),
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+            background-position: 0 0, 0 0, center center, center center;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            animation: panBackground 20s linear infinite;
+        }
+
+        @keyframes panBackground {
+            0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+            100% { background-position: 0 0, 0 0, 50px 50px, 50px 50px; }
+        }
+
+        header { width: 100%; padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 10; }
+
+        .logo {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(227, 194, 99, 0.5);
+        }
+
+        .security-badge {
+            font-size: 0.7rem;
+            color: #00ff87;
+            border: 1px solid rgba(0, 255, 135, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 135, 0.05);
+        }
+
+        main { width: 100%; max-width: 900px; padding: 1rem; position: relative; z-index: 10; perspective: 1000px; }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(20, 25, 35, 0.6) 0%, rgba(10, 12, 18, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(227, 194, 99, 0.2);
+            border-top: 1px solid rgba(227, 194, 99, 0.5);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255,255,255,0.1);
+            transform-style: preserve-3d;
+            animation: cardEntrance 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(50px) rotateX(10deg);
+        }
+
+        @keyframes cardEntrance {
+            to { opacity: 1; transform: translateY(0) rotateX(0); }
+        }
+
+        .tournament-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #E3C263, #B8860B);
+            color: #000;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(227, 194, 99, 0.4);
+        }
+
+        .match-info { text-align: center; margin-bottom: 3rem; position: relative; }
+
+        .teams-container { display: flex; justify-content: center; align-items: center; gap: 2rem; margin-bottom: 1rem; }
+        .team { font-family: 'Syncopate', sans-serif; font-size: 2.5rem; font-weight: 700; text-transform: uppercase; }
+        .vs { font-size: 1.2rem; color: #E3C263; font-style: italic; font-weight: 300; }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff4757;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            background: rgba(255, 71, 87, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 71, 87, 0.3);
+        }
+        .live-dot { width: 8px; height: 8px; background-color: #ff4757; border-radius: 50%; box-shadow: 0 0 10px #ff4757; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.5; } 50% { transform: scale(1.5); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.5; } }
+
+        .options-title { font-size: 0.8rem; color: #8fa3b0; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
+
+        .channel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .channel-btn {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: white;
+            text-decoration: none;
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .server-name { font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; z-index: 2; position: relative; }
+        .server-stats { display: flex; gap: 15px; font-size: 0.7rem; color: #8fa3b0; font-family: monospace; z-index: 2; position: relative; opacity: 0.5; transition: opacity 0.3s; }
+
+        .channel-btn::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(227, 194, 99, 0.1), transparent);
+            transform: translateX(-100%); transition: transform 0.6s ease; z-index: 1;
+        }
+
+        .channel-btn:hover {
+            background: rgba(20, 25, 35, 0.8);
+            border-color: #E3C263;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(227, 194, 99, 0.2);
+        }
+        .channel-btn:hover::before { transform: translateX(100%); }
+        .channel-btn:hover .server-stats { opacity: 1; color: #E3C263; }
+
+        #security-loader {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 12, 18, 0.95); backdrop-filter: blur(10px);
+            border-radius: 30px; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 20;
+            transition: opacity 0.5s ease;
+        }
+        .scan-line { width: 100%; height: 2px; background: #00ff87; position: absolute; top: 0; animation: scan 2s linear infinite; opacity: 0.5; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        .terminal-text { font-family: monospace; color: #00ff87; font-size: 0.9rem; margin-top: 20px; letter-spacing: 1px; }
+
+        .time-left { text-align: center; margin-top: 2.5rem; font-size: 0.75rem; color: #64748b; font-family: monospace; letter-spacing: 1px; }
+
+        @media (max-width: 768px) {
+            .channel-grid { grid-template-columns: 1fr; }
+            .teams-container { flex-direction: column; gap: 0.5rem; }
+            .team { font-size: 2rem; }
+            .glass-card { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">OSWALDO</div>
+        <div class="security-badge"><div class="live-dot" style="background:#00ff87; box-shadow:0 0 10px #00ff87;"></div> FEED SEGURO</div>
+    </header>
+
+    <main>
+        <div class="glass-card">
+
+            <div id="security-loader">
+                <div class="scan-line"></div>
+                <div style="width: 50px; height: 50px; border: 3px solid transparent; border-top-color: #00ff87; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <div class="terminal-text" id="term-text">Estableciendo conexión encriptada...</div>
+            </div>
+
+            <div style="text-align: center;"><div class="tournament-badge">Copa Mundial de la FIFA™</div></div>
+
+            <div class="match-info">
+                <div class="teams-container">
+                    <div class="team">IRAK</div>
+                    <div class="vs">VS</div>
+                    <div class="team">NORUEGA</div>
+                </div>
+                <div class="live-indicator"><div class="live-dot"></div> EN VIVO - SEÑAL MUNDIAL</div>
+            </div>
+
+            <div class="options-title">Nodos de Transmisión Disponibles</div>
+
+            <div class="channel-grid">
+                <a href="telemundo.html" class="channel-btn">
+                    <div class="server-name">Servidor 1: Telemundo</div>
+                    <div class="server-stats">
+                        <span>📡 PING: 18ms</span>
+                        <span>📺 4K UHD</span>
+                        <span>🔒 256-bit</span>
+                    </div>
+                </a>
+                <a href="dsports.html" class="channel-btn">
+                    <div class="server-name">Servidor 2: DSports</div>
+                    <div class="server-stats">
+                        <span>📡 PING: 24ms</span>
+                        <span>📺 HD 60FPS</span>
+                        <span>🔒 256-bit</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="time-left">ESTADO DEL PASE VIP: ACTIVO Y VERIFICADO</div>
+        </div>
+    </main>
+
+    <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+    <script>
+        setTimeout(() => { document.getElementById('term-text').innerText = "Validando Pase VIP..."; }, 800);
+        setTimeout(() => { document.getElementById('term-text').innerText = "Desencriptando señal de video..."; }, 1600);
+        setTimeout(() => {
+            const loader = document.getElementById('security-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
+        }, 2400);
+    </script>
+</body>
+</html>

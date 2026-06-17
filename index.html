@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso VIP | Stream</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Montserrat:wght@400;600;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030508;
+            background-image: radial-gradient(circle at center, #1a2035 0%, #030508 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            overflow: hidden;
+        }
+
+        .particle { position: absolute; background: rgba(227, 194, 99, 0.2); border-radius: 50%; pointer-events: none; }
+
+        .login-box {
+            background: rgba(10, 12, 18, 0.8);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(227, 194, 99, 0.15);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(227, 194, 99, 0.05);
+            position: relative;
+            z-index: 2;
+        }
+
+        .title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #E3C263, #fff, #E3C263);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine { to { background-position: 200% center; } }
+
+        .subtitle { color: #8fa3b0; font-size: 0.85rem; margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        .wa-btn {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid #25D366;
+            color: #25D366;
+            text-decoration: none; padding: 1.2rem; border-radius: 16px;
+            font-weight: 700; font-size: 0.95rem; margin-bottom: 2.5rem;
+            transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .wa-btn:hover { background: #25D366; color: #000; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); transform: translateY(-2px); }
+
+        .divider { display: flex; align-items: center; color: #4a5568; font-size: 0.75rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .divider::before { margin-right: 1em; } .divider::after { margin-left: 1em; }
+
+        .input-group { margin-bottom: 2rem; text-align: left; position: relative; }
+        .input-group label { display: block; margin-bottom: 0.8rem; color: #8fa3b0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        .password-input {
+            width: 100%; padding: 1.2rem;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #E3C263;
+            border-radius: 16px; font-family: monospace; font-size: 1.5rem;
+            text-align: center; letter-spacing: 8px; outline: none;
+            transition: all 0.3s;
+        }
+
+        .password-input:focus { border-color: #E3C263; box-shadow: 0 0 15px rgba(227, 194, 99, 0.2); background: rgba(0,0,0,0.8); }
+
+        .submit-btn {
+            width: 100%; padding: 1.2rem;
+            background: linear-gradient(90deg, #E3C263, #B8860B);
+            border: none; border-radius: 16px;
+            color: #000; font-size: 1rem; font-weight: 800;
+            cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(227, 194, 99, 0.3); }
+        .error-msg { color: #ff4757; font-size: 0.8rem; margin-top: 1rem; display: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+    <script>
+        for(let i=0; i<20; i++) {
+            let p = document.createElement('div');
+            p.className = 'particle';
+            p.style.width = Math.random() * 5 + 'px';
+            p.style.height = p.style.width;
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.top = Math.random() * 100 + 'vh';
+            p.style.animation = `shine ${Math.random() * 3 + 2}s infinite alternate`;
+            document.body.appendChild(p);
+        }
+    </script>
+
+    <div class="login-box">
+        <h1 class="title">ACCESO VIP</h1>
+        <p class="subtitle">Señal Oficial • $10 MXN / Partido</p>
+
+        <a href="https://wa.me/522722335621?text=Hola%20Oswaldo,%20quiero%20obtener%20el%20acceso%20VIP%20para%20el%20partido.%20¿Me%20pasas%20los%20datos%20para%20hacer%20la%20transferencia?" target="_blank" class="wa-btn">
+            📱 Obtener Pase VIP
+        </a>
+
+        <div class="divider">Ingreso al Estadio</div>
+
+        <div class="input-group">
+            <label>Código de Acceso Seguro</label>
+            <input type="text" id="passInput" class="password-input" placeholder="••••••••" autocomplete="off">
+        </div>
+
+        <button class="submit-btn" onclick="verificarContraseña()">Desbloquear Transmisión</button>
+        <div id="errorText" class="error-msg">❌ Acceso Denegado</div>
+    </div>
+
+    <script>
+        const codigoSecreto = "==gNy0CTBlEROVVT";
+
+        function verificarContraseña() {
+            const input = document.getElementById('passInput').value.trim().toUpperCase();
+            const errorMsg = document.getElementById('errorText');
+            const btn = document.querySelector('.submit-btn');
+
+            btn.innerText = "Desencriptando...";
+
+            setTimeout(() => {
+                let intentoOculto = btoa(input).split('').reverse().join('');
+
+                if (intentoOculto === codigoSecreto) {
+                    btn.style.background = "#00ff87";
+                    btn.innerText = "ACCESO PERMITIDO";
+                    localStorage.setItem('oswaldo_pase_vip', Date.now());
+                    setTimeout(() => { window.location.href = 'stream.html'; }, 800);
+                } else {
+                    btn.innerText = "Desbloquear Transmisión";
+                    errorMsg.style.display = 'block';
+                    document.getElementById('passInput').style.borderColor = "#ff4757";
+                    document.getElementById('passInput').style.color = "#ff4757";
+                    setTimeout(() => {
+                        errorMsg.style.display = 'none';
+                        document.getElementById('passInput').style.borderColor = "rgba(255,255,255,0.1)";
+                        document.getElementById('passInput').style.color = "#E3C263";
+                    }, 3000);
+                }
+            }, 800);
+        }
+
+        window.onload = function() {
+            const pase = localStorage.getItem('oswaldo_pase_vip');
+            if (pase) {
+                const ahora = Date.now();
+                const limite = 2.5 * 60 * 60 * 1000;
+                if ((ahora - pase) < limite) {
+                    window.location.href = 'stream.html';
+                } else {
+                    localStorage.removeItem('oswaldo_pase_vip');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
