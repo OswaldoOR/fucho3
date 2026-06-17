@@ -129,7 +129,9 @@
 
         .options-title { font-size: 0.8rem; color: #8fa3b0; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
 
-        .channel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        /* Ajuste de cuadrícula para que los botones se vean bien */
+        .channel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
         .channel-btn {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -204,16 +206,16 @@
 
             <div class="match-info">
                 <div class="teams-container">
-                    <div class="team">PORTUGAL</div>
+                    <div class="team">IRAK</div>
                     <div class="vs">VS</div>
-                    <div class="team">R. DEL CONGO</div>
+                    <div class="team">NORUEGA</div>
                 </div>
                 <div class="live-indicator"><div class="live-dot"></div> EN VIVO - SEÑAL MUNDIAL</div>
             </div>
 
             <div class="options-title">Nodos de Transmisión Disponibles</div>
 
-            <!-- CUADRÍCULA DE 4 CANALES -->
+            <!-- CUADRÍCULA DE 5 CANALES -->
             <div class="channel-grid">
                 <a href="telemundo.html" class="channel-btn">
                     <div class="server-name">Servidor 1: Telemundo</div>
@@ -231,7 +233,6 @@
                         <span>🔒 256-bit</span>
                     </div>
                 </a>
-                <!-- NUEVO: TUDN -->
                 <a href="tudnmx.html" class="channel-btn">
                     <div class="server-name">Servidor 3: TUDN</div>
                     <div class="server-stats">
@@ -240,12 +241,19 @@
                         <span>🔒 256-bit</span>
                     </div>
                 </a>
-                <!-- NUEVO: ESPN -->
-                <a href="espn.html" class="channel-btn">
-                    <div class="server-name">Servidor 4: CARACOL TV</div>
+                <a href="caracol.html" class="channel-btn">
+                    <div class="server-name">Servidor 4: Caracol TV</div>
                     <div class="server-stats">
                         <span>📡 PING: 22ms</span>
                         <span>📺 1080p</span>
+                        <span>🔒 256-bit</span>
+                    </div>
+                </a>
+                <a href="universo.html" class="channel-btn">
+                    <div class="server-name">Servidor 5: Universo</div>
+                    <div class="server-stats">
+                        <span>📡 PING: 19ms</span>
+                        <span>📺 1080p HD</span>
                         <span>🔒 256-bit</span>
                     </div>
                 </a>
